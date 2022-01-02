@@ -7,8 +7,57 @@
 
 
 {% block content %}
-<div class="container">
-    <h1>This is Participant Participation Page</h1>
+<div class="">
+    <h1>This is Participant Participation Page</h1>    
+    {% for event in event_list %}
+    <div>
+        <p> {{event.name}} </p>
+        <p> {{event.desc}} </p>
+        <p> {{event.poster_link}} </p>
+        <p> {{event.from_date}} </p>
+        <p> {{event.to_date}} </p>
+        <p> {{event.deadline}} </p>    
+        <hr>
+    </div>
+    {% endfor %}
+    
+    <div class="form-box">        
+        <form action="/participant_register" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="participant_name">Participant Name</label>
+                <input type="text" class="form-control" name="participant_name" id="participant_name" placeholder="Participant Name" required>
+            </div>
+            <div class="form-group">
+                <label for="contact_no">Contact No</label>
+                <input type="text" class="form-control" name="contact_no" id="contact_no" placeholder="Contact No" required>
+            </div>
+            <div class="form-group">
+                <label for="participant_email">Email</label>
+                <input type="email" class="form-control" name="participant_email" id="participant_email" placeholder="">
+            </div>
+            <div class="form-group">
+                <p>Event</p>
+                {% for event in event_list %}
+                    <input type="radio" id={{event.name}} name=event_name value="{{event.name}}">
+                    <label for="{{event.name}}">{{event.name}}</label><br>
+                {% endfor %}                
+            </div>
+           
+            <div class="form-group">
+                <p>Registration Type</p>
+                <input type="radio" id="Individual" name="registration_type" value="Individual">
+                <label for="Individual">Individual</label><br>
+                <input type="radio" id="Group" name="registration_type" value="Group">
+                <label for="Group">Group</label><br>                
+            </div>
+            <div class="form-group">
+                <label for="no_of_people">No of People</label>
+                <input type="number" class="form-control" name="no_of_people" id="no_of_people" placeholder="">
+            </div>
 
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 </div>
 {% endblock content %}

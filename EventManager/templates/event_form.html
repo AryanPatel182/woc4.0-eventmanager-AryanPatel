@@ -6,8 +6,46 @@
 
 
 {% block content %}
-<div class="container">
-    <h1>This is event registration Page</h1>
+<div>
+    <div class="form-box">
+        <h1>This is event registration Page</h1>
+        <form action="/event_register" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Event Name</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Event Name" required>
+            </div>
+            <div class="form-group">
+                <label for="desc">Description</label>
+                <input type="text" class="form-control" name="desc" id="description" placeholder="Description" required>
+            </div>
+            <div class="form-group">
+                <label for="poster_link">Poster Link</label>    
+                <input type="url" class="form-control" name="poster_link" id="poster_link" placeholder="Poster Link">            
+            </div>            
+            <div class="form-group">
+                <label for="from_date">From</label>    
+                <input type="datetime-local" class="form-control" name="from_date" id="from_date" placeholder="">            
+            </div>            
+            <div class="form-group">
+                <label for="to_date">To</label>    
+                <input type="datetime-local" class="form-control" name="to_date" id="to_date" placeholder="">            
+            </div>            
+            <div class="form-group">
+                <label for="deadline">Deadline</label>    
+                <input type="datetime-local" class="form-control" name="deadline" id="deadline" placeholder="">            
+            </div>            
+            <div class="form-group">
+                <label for="host_email">Host email</label>    
+                <input type="email" class="form-control" name="host_email" id="host_email" placeholder="">            
+            </div>            
+            <div class="form-group">
+                <label for="password">Event Password</label>    
+                <input type="password" class="form-control" name="password" id="password" placeholder="">                 
+            </div>       
+            <button type="submit" class="btn btn-primary">Submit</button>            
+        </form>
+    </div>
     
 </div>
 {% endblock content %}

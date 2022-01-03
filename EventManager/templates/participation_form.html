@@ -11,6 +11,7 @@
     <h1>This is Participant Participation Page</h1>    
     {% for event in event_list %}
     <div>
+        <p> {{event.id}}</p>
         <p> {{event.name}} </p>
         <p> {{event.desc}} </p>
         <p> {{event.poster_link}} </p>
@@ -21,8 +22,13 @@
     </div>
     {% endfor %}
     
-    <div class="form-box">        
-        <form action="/participant_register" method="post">
+    <div class="form-box">
+        {% if messages %}
+        <ul class="messages">            
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ messages }}</li>            
+        </ul>
+        {% endif %}
+        <form class="myForm" action="/participant_register" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="participant_name">Participant Name</label>
@@ -57,7 +63,10 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+            <button class="btn btn-primary"><a href="/">Back</a></button>
+
+        </form>    
+
     </div>
 </div>
 {% endblock content %}

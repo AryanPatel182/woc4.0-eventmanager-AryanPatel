@@ -14,6 +14,11 @@
 
 <body>
     {% block content %}{% endblock content %}
+    <script>
+        var form = document.getElementsByClassName("myForm");
+        function handleForm(event) { event.preventDefault(); }
+        form.addEventListener('submit', handleForm);
+    </script>
 </body>
 
 </html>

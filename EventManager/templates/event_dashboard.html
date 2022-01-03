@@ -7,7 +7,59 @@
 
 
 {% block content %}
-<div class="container">
-    <h1>This is event dashboard Page</h1>
+<div class="">
+    
+    <div class="form-box">        
+        <h1>This is event dashboard Page</h1>
+        {% if messages %}
+        <ul class="messages">
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ messages }}</li>
+        </ul>
+        {% endif %}
+        <form class="myForm" action="/event_dashboard" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="event_id">Event ID</label>
+                <input type="number" class="form-control" name="event_id" id="event_id" placeholder="" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>    
+                <input type="password" class="form-control" name="password" id="password" placeholder="">                 
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary"><a href="/">Back</a></button>
+        </form>
+    </div>
+
+    {% if participant_list %}
+    <div>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Participant ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Contact No</th>
+                    <th scope="col">Email ID</th>                    
+                    <th scope="col">Registration Type</th>
+                    <th scope="col">No of People</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for participant in participant_list %}
+                <tr>
+                    <td> {{participant.id}}</td>
+                    <td> {{participant.participant_name}}</td>
+                    <td> {{participant.contact_no}}</td>
+                    <td> {{participant.participant_email}}</td>                                                           
+                    <td> {{participant.registration_type}}</td>                    
+                    <td> {{participant.no_of_people}}</td>                    
+                </tr>
+                
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
 </div>
 {% endblock content %}

@@ -9,7 +9,7 @@
 <div>
     <div class="form-box">
         <h1>This is event registration Page</h1>
-        <form action="/event_register" method="post">
+        <form class="myForm" action="/event_register" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">Event Name</label>
@@ -43,7 +43,9 @@
                 <label for="password">Event Password</label>    
                 <input type="password" class="form-control" name="password" id="password" placeholder="">                 
             </div>       
-            <button type="submit" class="btn btn-primary">Submit</button>            
+            <button type="submit" class="btn btn-primary">Submit</button>      
+            <button class="btn btn-primary"><a href="/">Back</a></button>
+      
         </form>
     </div>
     

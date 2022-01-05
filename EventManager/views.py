@@ -47,7 +47,7 @@ def participant_registration(request):
 
         # Already Registered
         if Participant.objects.all().filter(participant_name=participant_name, contact_no=contact_no,participant_email=participant_email,event_name=evnt):
-            context = {'event_list': Event.objects.all(),'messages':"You have already participated in the event !"}
+            context = {'event_list': Event.objects.all().filter(deadline__gte=datetime.now()) ,'messages':"You have already participated in the event !"}
             return render(request, 'participation_form.html', context)
 
         # New participant

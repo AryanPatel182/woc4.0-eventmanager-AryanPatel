@@ -7,22 +7,28 @@
 
 
 {% block content %}
-<div class="">
-    <h1>This is Participant Participation Page</h1>    
-    {% for event in event_list %}
-    <div>
-        <p> {{event.id}}</p>
-        <p> {{event.name}} </p>
-        <p> {{event.desc}} </p>
-        <p> {{event.poster_link}} </p>
-        <p> {{event.from_date}} </p>
-        <p> {{event.to_date}} </p>
-        <p> {{event.deadline}} </p>    
-        <hr>
+<div class="box">
+    <div class="event-box2">        
+        <h3 id="chngtxt">Show Available Events</h3>
+        <button onclick="showhide()" style="background-color: white; color: black; height: 28px; width: 30px;"><img src="/static/visibility_black_24dp.svg" id="chngimg"></img></button>
     </div>
-    {% endfor %}
-    
+    <div class="event-box" id="event-box">
+        {% for event in event_list %}
+        <div style="margin-bottom: 15px;">
+            <h4 style="margin-bottom: 10px;"> 
+                <b>{{event.name}} </b>                                
+            </h4>
+            <p> <b>Event ID: </b>{{event.id}}</p>
+            <p> <b>Description: </b> {{event.desc}} </p>
+            <!-- <p> {{event.poster_link}} </p> -->
+            <p> <b>Date(s): </b>{{event.from_date}} <b> - </b>{{event.to_date}}</p>        
+            <p> <b>Registration Deadline: </b>{{event.deadline}} </p>
+            <hr>            
+        </div>
+        {% endfor %}
+    </div>
     <div class="form-box">
+        <h1>Participation Page</h1>
         {% if messages %}
         <ul class="messages">            
             <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ messages }}</li>            
@@ -32,38 +38,51 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="participant_name">Participant Name</label>
-                <input type="text" class="form-control" name="participant_name" id="participant_name" placeholder="Participant Name" required>
+                <input type="text" class="form-control" name="participant_name" id="participant_name" required>
             </div>
             <div class="form-group">
                 <label for="contact_no">Contact No</label>
-                <input type="text" class="form-control" name="contact_no" id="contact_no" placeholder="Contact No" required>
+                <input type="text" class="form-control" name="contact_no" id="contact_no" required>
             </div>
             <div class="form-group">
                 <label for="participant_email">Email</label>
-                <input type="email" class="form-control" name="participant_email" id="participant_email" placeholder="">
+                <input type="email" class="form-control" name="participant_email" id="participant_email" required>
             </div>
             <div class="form-group">
-                <p>Event</p>
-                {% for event in event_list %}
-                    <input type="radio" id={{event.name}} name=event_name value="{{event.name}}">
-                    <label for="{{event.name}}">{{event.name}}</label><br>
+                {% comment %} <label for="participant_email">Email</label>
+                <input type="email" class="form-control" name="participant_email" id="participant_email" required> {% endcomment %}
+            </div>
+            <div class="form-group">
+                <p>Event</p>                
+                {% for event in event_list %}                    
+                <div class="inline-input" >
+                    <label for="{{event.name}}">{{event.name}}</label>
+                    <input type="radio" id={{event.name}} name=event_name value="{{event.name}}">                    
+                </div>
                 {% endfor %}                
             </div>
            
             <div class="form-group">
                 <p>Registration Type</p>
-                <input type="radio" id="Individual" name="registration_type" value="Individual">
-                <label for="Individual">Individual</label><br>
-                <input type="radio" id="Group" name="registration_type" value="Group">
-                <label for="Group">Group</label><br>                
+                <div class="inline-input">
+                    <label for="Individual">Individual</label>
+                    <input onclick="hideppl()" type="radio" id="Individual" name="registration_type" value="Individual">
+                </div>
+                <div class="inline-input">
+                    <label for="Group">Group</label>
+                    <input onclick="showppl()" type="radio" id="Group" name="registration_type" value="Group">
+                </div>
             </div>
-            <div class="form-group">
+            <div class="form-group line-form-group" id="number-ppl">
                 <label for="no_of_people">No of People</label>
-                <input type="number" class="form-control" name="no_of_people" id="no_of_people" placeholder="">
+                <input type="number" class="form-control" name="no_of_people" id="no_of_people" value="1" min="1">
+            </div>                         
+            <div class="form-group">
+                <a href="/">Back</a>                
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button class="btn btn-primary"><a href="/">Back</a></button>
+            <div class="form-group submit-btn">                
+                <button type="submit" class="btn btn-primary">Submit</button>      
+            </div>
 
         </form>    
 

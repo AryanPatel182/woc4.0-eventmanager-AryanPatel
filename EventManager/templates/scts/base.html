@@ -9,15 +9,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&family=Rokkitt:wght@700&family=Yantramanav&display=swap" rel="stylesheet">    
     {% block title %}{% endblock title %}
 </head>
 
 <body>
     {% block content %}{% endblock content %}
-    <script>
-        var form = document.getElementsByClassName("myForm");
-        function handleForm(event) { event.preventDefault(); }
-        form.addEventListener('submit', handleForm);
+    <script>         
+        function showhide() {
+            var x = document.getElementById("event-box");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                document.getElementById("chngtxt").innerText = "Hide Available Events";
+                document.getElementById("chngimg").src = "/static/visibility_off_black_24dp.svg";
+            } else {
+                x.style.display = "none";
+                document.getElementById("chngtxt").innerText = "Show Available Events";
+                document.getElementById("chngimg").src = "/static/visibility_black_24dp.svg";
+            }
+        }
+        function hideppl() {            
+            document.getElementById("number-ppl").style.display = "none";
+        }
+        function showppl() {            
+            document.getElementById("number-ppl").style.display = "block";
+        }
+
+        
+            
     </script>
 </body>
 

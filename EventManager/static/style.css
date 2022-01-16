@@ -79,6 +79,7 @@ label{
   margin-bottom: 10px;
 }
 
+
 .myForm
 {
   display: grid;
@@ -94,6 +95,15 @@ label{
 {
   grid-column-start: 1;
   grid-column-end: 3;
+}
+
+@media (max-width:730px) {
+  .myForm{
+    grid-template-columns: 1fr;
+  }
+  .line-form-group{
+    grid-column-end:2;
+  }
 }
 
 .submit-btn{

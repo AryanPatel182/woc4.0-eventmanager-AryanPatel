@@ -23,16 +23,24 @@ def event_registration(request):
         host_email = request.POST.get('host_email')
         password = request.POST.get('password')
 
+        if(Event.objects.all().filter(name=name).exists()):
+            context = {'messages': "The event with the same name already exists ! Please try other name ."}
+            return render(request, 'event_form.html', context)
+        if(from_date > to_date):
+            context = {'messages': "Starting time or End time of the event might be wrong ! Please check again ."}
+            return render(request, 'event_form.html', context)
+
         event = Event(name=name, desc=desc, poster_link=poster_link, from_date=from_date, to_date=to_date, deadline=deadline, host_email=host_email, password=password)        
         # event.save()
-        send_mail(
-           'Your event :',
-            'Here is the confirmation message.\n Good Luck !',
-            os.environ.get("EMAIL_HOST_USER"),
-            [host_email],
-            fail_silently=False,
-        )
-        return render(request, 'index.html')
+        # send_mail(
+        #    'Your event :',
+        #     'Here is the confirmation message.\n Good Luck !',
+        #     os.environ.get("EMAIL_HOST_USER"),
+        #     [host_email],
+        #     fail_silently=False,
+        # )        
+        context = {'success': "Your event has been registered successfully !"}
+        return render(request, 'event_form.html', context)
     return render(request, 'event_form.html')
 
 def participant_registration(request):

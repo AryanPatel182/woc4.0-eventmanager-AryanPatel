@@ -9,6 +9,16 @@
 <div class="box">
     <div class="form-box">
         <h1>Event Registration</h1>
+        {% if messages %}
+        <ul class="messages">            
+            <li>{{ messages }}</li>            
+        </ul>
+        {% endif %}
+        {% if success %}
+        <ul class="success" style="color: #05cd43;">            
+            <li>{{ success }}</li>            
+        </ul>
+        {% endif %}
         <form class="myForm" action="/event_register" method="post">
             {% csrf_token %}
             <div class="form-group">

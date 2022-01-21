@@ -9,7 +9,7 @@
 {% block content %}
 <div class="box">
     <div class="event-box2">        
-        <h3 id="chngtxt">Show Available Events</h3>
+        <h3 style="width: 250px;" id="chngtxt">Show Upcoming Events</h3>
         <button onclick="showhide()" style="background-color: white; color: black; height: 28px; width: 30px;"><img src="/static/visibility_black_24dp.svg" id="chngimg"></img></button>
     </div>
     <div class="event-box" id="event-box">
@@ -31,7 +31,12 @@
         <h1>Participation Page</h1>
         {% if messages %}
         <ul class="messages">            
-            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ messages }}</li>            
+            <li>{{ messages }}</li>            
+        </ul>
+        {% endif %}
+        {% if success %}
+        <ul class="success" style="color: #05cd43">            
+            <li>{{ success }}</li>            
         </ul>
         {% endif %}
         <form class="myForm" action="/participant_register" method="post">
@@ -42,7 +47,7 @@
             </div>
             <div class="form-group">
                 <label for="contact_no">Contact No</label>
-                <input type="text" class="form-control" name="contact_no" id="contact_no" required>
+                <input type="text" class="form-control" name="contact_no" id="contact_no" maxlength="10" required>
             </div>
             <div class="form-group">
                 <label for="participant_email">Email</label>

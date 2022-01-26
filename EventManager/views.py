@@ -61,7 +61,7 @@ def participant_registration(request):
         # New participant
         participant = Participant(participant_name=participant_name, contact_no=contact_no, participant_email=participant_email, event_name=evnt, registration_type=registration_type, no_of_people=no_of_people)
 
-        # participant.save()
+        participant.save()
         # print(participant)        
 
     context = {'event_list': Event.objects.all().filter(deadline__gte=datetime.now())}

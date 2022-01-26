@@ -1,5 +1,9 @@
+import imp
 from django.db import models
 from django.db.models.deletion import CASCADE
+from dotenv import load_dotenv
+import os
+from twilio.rest import Client
 
 # Create your models here.
 class Event(models.Model):
@@ -19,3 +23,17 @@ class Participant(models.Model):
     event_name = models.ForeignKey(Event, on_delete=models.CASCADE)
     registration_type = models.CharField(max_length=20)
     no_of_people = models.IntegerField(default=1)
+
+    def save(self, *args, **kwargs):
+        account_sid = os.environ['TWILIO_ACCOUNT_SID']
+        account_sid = os.environ['TWILIO_ACCOUNT_SID']
+        auth_token = os.environ['TWILIO_AUTH_TOKEN']
+        client = Client(account_sid, auth_token)
+
+        message = client.messages.create(
+            body='Hello There, You have successfully registered in the event.',
+            from_=os.environ['MY_NUM1'],
+            to=os.environ['MY_NUM2']
+        )
+
+        return super().save(*args, **kwargs)

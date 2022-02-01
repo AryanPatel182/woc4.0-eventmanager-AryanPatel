@@ -31,14 +31,14 @@ def event_registration(request):
             return render(request, 'event_form.html', context)
 
         event = Event(name=name, desc=desc, poster_link=poster_link, from_date=from_date, to_date=to_date, deadline=deadline, host_email=host_email, password=password)        
-        # event.save()
-        # send_mail(
-        #    'Your event :',
-        #     'Here is the confirmation message.\n Good Luck !',
-        #     os.environ.get("EMAIL_HOST_USER"),
-        #     [host_email],
-        #     fail_silently=False,
-        # )        
+        event.save()
+        send_mail(
+           'Your event :',
+            'Here is the confirmation message.\n Good Luck !',
+            os.environ.get("EMAIL_HOST_USER"),
+            [host_email],
+            fail_silently=False,
+        )        
         context = {'success': "Your event has been registered successfully !"}
         return render(request, 'event_form.html', context)
     return render(request, 'event_form.html')

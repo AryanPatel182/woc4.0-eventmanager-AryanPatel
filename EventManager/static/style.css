@@ -4,9 +4,9 @@
  /* background-color: #f8f9fa; */
   
 }
- body{
+ /* body{
   background-color: #f8f9fa;
-} 
+}  */
 
 label{
   font-family: 'Rokkitt', serif;
@@ -45,7 +45,7 @@ a:hover {
   grid-template-columns: 1fr;  
   margin: 0px auto 10px auto;
   padding-top: 30px;
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa; */
   height: 100vh;
   /* position: fixed; */
   

@@ -9,23 +9,28 @@
 {% block content %}
 <div class="box">
     <div class="event-box2">        
-        <h3 style="width: 250px;" id="chngtxt">Show Upcoming Events</h3>
+        <h3 style="width: 350px;" id="chngtxt">Show Upcoming Events</h3>
         <button onclick="showhide()" style="background-color: white; color: black; height: 28px; width: 30px;"><img src="/static/visibility_black_24dp.svg" id="chngimg"></img></button>
     </div>
     <div class="event-box" id="event-box">
-        {% for event in event_list %}
-        <div style="margin-bottom: 15px;">
-            <h4 style="margin-bottom: 10px;"> 
-                <b>{{event.name}} </b>                                
-            </h4>
-            <p> <b>Event ID: </b>{{event.id}}</p>
-            <p> <b>Description: </b> {{event.desc}} </p>
-            <!-- <p> {{event.poster_link}} </p> -->
-            <p> <b>Date(s): </b>{{event.from_date}} <b> - </b>{{event.to_date}}</p>        
-            <p> <b>Registration Deadline: </b>{{event.deadline}} </p>
-            <hr>            
-        </div>
-        {% endfor %}
+        {% if event_list %}
+            {% for event in event_list %}
+            <div style="margin-bottom: 15px;">
+                <h4 style="margin-bottom: 10px;">
+                    <b>{{event.name}} </b>
+                </h4>
+                <p> <b>Event ID: </b>{{event.id}}</p>
+                <p> <b>Description: </b> {{event.desc}} </p>
+                <!-- <p> {{event.poster_link}} </p> -->
+                <p> <b>Date(s): </b>{{event.from_date}} <b> - </b>{{event.to_date}}</p>
+                <p> <b>Registration Deadline: </b>{{event.deadline}} </p>
+                <hr>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h4>Currently no event's registration is open</h4>
+        {% endif%}
+        
     </div>
     <div class="form-box">
         <h1>Participation Page</h1>
@@ -58,13 +63,17 @@
                 <input type="email" class="form-control" name="participant_email" id="participant_email" required> {% endcomment %}
             </div>
             <div class="form-group">
-                <p>Event</p>                
-                {% for event in event_list %}                    
-                <div class="inline-input" >
-                    <label for="{{event.name}}">{{event.name}}</label>
-                    <input type="radio" id={{event.name}} name=event_name value="{{event.name}}">                    
-                </div>
-                {% endfor %}                
+                <p>Event</p>    
+                {% if event_list %}
+                    {% for event in event_list %}                    
+                    <div class="inline-input" >
+                        <label for="{{event.name}}">{{event.name}}</label>
+                        <input type="radio" id={{event.name}} name=event_name value="{{event.name}}">                    
+                    </div>
+                    {% endfor %} 
+                {% else %}
+                    <p>Event's not available</p>            
+                {% endif %}               
             </div>
            
             <div class="form-group">

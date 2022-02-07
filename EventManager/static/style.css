@@ -173,3 +173,12 @@ hr{
 #number-ppl{
   display: none;
 }
+
+.opt
+{
+  margin-top: 10px;
+}
+
+.opt:hover{
+  scale: 1;
+}

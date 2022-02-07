@@ -34,6 +34,7 @@ class Participant(models.Model):
             body='Hello There, You have successfully registered in the event.',
             from_=os.environ['MY_NUM1'],
             to=os.environ['MY_NUM2']
+            # to = '+918128431262'        
         )
 
         return super().save(*args, **kwargs)

@@ -13,7 +13,7 @@ def index(request):
     return render(request, 'index.html')    
 
 def event_registration(request):
-    if request.method == 'POST':
+    if request.method == 'POST':        
         name = request.POST.get('name')
         desc = request.POST.get('desc')
         poster_link = request.POST.get('poster_link')
@@ -26,20 +26,22 @@ def event_registration(request):
         if(Event.objects.all().filter(name=name).exists()):
             context = {'messages': "The event with the same name already exists ! Please try other name ."}
             return render(request, 'event_form.html', context)
-        if(from_date > to_date):
-            context = {'messages': "Starting time or End time of the event might be wrong ! Please check again ."}
+        if(from_date > to_date or deadline > from_date):
+            context = {'messages': "Starting time or End time of the event or Deadline might be wrong ! Please check again ."}
             return render(request, 'event_form.html', context)
 
         event = Event(name=name, desc=desc, poster_link=poster_link, from_date=from_date, to_date=to_date, deadline=deadline, host_email=host_email, password=password)        
+
         event.save()
+        evt_id = Event.objects.get(name=name).id        
         send_mail(
-           'Your event :',
-            'Here is the confirmation message.\n Good Luck !',
+           'Your event : '+ str(name),
+            'Here is the confirmation message.\n Good Luck ! Your event id is ' + str(evt_id),
             os.environ.get("EMAIL_HOST_USER"),
             [host_email],
             fail_silently=False,
         )        
-        context = {'success': "Your event has been registered successfully !"}
+        context = {'success': "Your event confirmation message has been sent to your registered email ID!"}
         return render(request, 'event_form.html', context)
     return render(request, 'event_form.html')
 
@@ -62,6 +64,9 @@ def participant_registration(request):
         participant = Participant(participant_name=participant_name, contact_no=contact_no, participant_email=participant_email, event_name=evnt, registration_type=registration_type, no_of_people=no_of_people)
 
         participant.save()
+        context = {'success': "Your participation is successfully registered !",
+                   'event_list': Event.objects.all().filter(deadline__gte=datetime.now())}
+        return render(request, 'participation_form.html', context)
         # print(participant)        
 
     context = {'event_list': Event.objects.all().filter(deadline__gte=datetime.now())}

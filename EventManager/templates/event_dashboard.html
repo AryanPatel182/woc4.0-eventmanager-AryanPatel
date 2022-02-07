@@ -16,6 +16,11 @@
             <li>{{ messages }}</li>
         </ul>
         {% endif %}
+        {% if success %}
+        <ul class="success" style="color: #05cd43">            
+            <li>{{ success }}</li>            
+        </ul>
+        {% endif %}
         <form class="myForm" action="/event_dashboard" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -63,6 +68,8 @@
             </tbody>
         </table>
     </div>
+    {% else %}
+     {% comment %} <h3>Nothing to Display</h3> {% endcomment %}
     {% endif %}
 </div>
 {% endblock content %}

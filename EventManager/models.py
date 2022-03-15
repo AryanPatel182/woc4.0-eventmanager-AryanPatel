@@ -6,6 +6,26 @@ import os
 from twilio.rest import Client
 
 # Create your models here.
+class Club(models.Model):
+    name = models.CharField(max_length=30)
+    admin = models.CharField(max_length=30)
+    desc = models.CharField(max_length=500)
+    poster_link = models.URLField(max_length=200)
+    admin_email = models.EmailField(max_length=254)
+    
+
+opt = (
+    ("President", "President"),
+    ("Vice President", "Vice President"),
+    ("Member", "Member"),
+)
+
+class ClubMembers(models.Model):
+    name = models.CharField(max_length=30)
+    club_name = models.ForeignKey(Club, on_delete=models.CASCADE)
+    position = models.CharField(max_length = 20,choices = opt)
+    contact_no = models.BigIntegerField()
+
 class Event(models.Model):
     name = models.CharField(max_length=30)
     desc = models.CharField(max_length=200)

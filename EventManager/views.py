@@ -2,7 +2,7 @@ from django.core.checks import messages
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.core.mail import send_mail
-from EventManager.models import Event, Participant
+from EventManager.models import Event, Participant, Club, ClubMembers
 from datetime import datetime
 from dotenv import load_dotenv
 import os
@@ -11,6 +11,39 @@ load_dotenv()
 # Create your views here.
 def index(request):
     return render(request, 'index.html')    
+
+def club_registration(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        admin = request.POST.get('admin')
+        desc = request.POST.get('desc')
+        poster_link = request.POST.get('poster_link')
+        admin_email = request.POST.get('admin_email')
+
+        club = Club(name=name, admin=admin, desc=desc, poster_link=poster_link, admin_email=admin_email)
+        club.save()
+    return render(request, 'clubreg_form.html')
+
+def club_member_registration(request):
+    if request.method == 'POST':
+        if(request.POST.get('master_password') == "admin"):
+            name = request.POST.get('name')
+            club_name = request.POST.get('club_name')
+            position = request.POST.get('position')
+            contact_no = request.POST.get('contact_no');
+            club = Club.objects.all().filter(name=club_name).first()
+            
+            print(position)
+            context = {'club_list': Club.objects.all()}
+            memebr = ClubMembers(name=name, club_name = club, position=position, contact_no=contact_no)
+            memebr.save()
+            return render(request, 'club_members.html', context)
+
+    context = {'club_list': Club.objects.all()}
+    print(Club.objects.all())
+    return render(request, 'club_members.html', context)
+        
+
 
 def event_registration(request):
     if request.method == 'POST':        
